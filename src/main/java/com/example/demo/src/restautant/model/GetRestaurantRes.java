@@ -28,7 +28,7 @@ public class GetRestaurantRes {
     private String introductionBoard;
 
     // 배달비
-    private int tipDelivery;
+    private String tipDelivery;
 
     // 배달시간
     private String timeDelivery;
@@ -36,12 +36,6 @@ public class GetRestaurantRes {
 
     // 카테고리
     private String categories;
-
-//    // 생성일
-//    private LocalDateTime creationDate;
-//
-//    // 수정일
-//    private LocalDateTime modificationDate;
 
     // 배달,배민1,포장
     private int type;

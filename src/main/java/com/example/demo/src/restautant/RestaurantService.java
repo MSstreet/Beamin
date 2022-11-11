@@ -3,11 +3,11 @@ package com.example.demo.src.restautant;
 
 
 import com.example.demo.config.BaseException;
+import com.example.demo.src.restautant.model.PatchRestaurantReq;
 import com.example.demo.src.restautant.model.PostRestaurantReq;
-import com.example.demo.src.user.model.PostUserReq;
+import com.example.demo.src.restautant.model.PostRestaurantRes;
 import com.example.demo.src.user.model.PostUserRes;
 import com.example.demo.utils.JwtService;
-import com.example.demo.utils.SHA256;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class RestaurantService {
         this.jwtService = jwtService;
     }
 
-    public PostUserRes createRestaurant(PostRestaurantReq postRestaurantReq) throws BaseException {
+    public PostRestaurantRes createRestaurant(PostRestaurantReq postRestaurantReq) throws BaseException {
 
 //        //중복
 //        if(userProvider.checkEmail(postUserReq.getEmail()) ==1){
@@ -44,17 +44,29 @@ public class RestaurantService {
 //        }
 
         try{
+
             int restaurantIdx = restaurantDao.createRestaurant(postRestaurantReq);
 
             //jwt 발급.
             String jwt = jwtService.createJwt(restaurantIdx);
 
-            return new PostUserRes(jwt,restaurantIdx);
-
+            return new PostRestaurantRes(jwt,restaurantIdx);
 
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
 
+    public void modifyRestaurant(PatchRestaurantReq patchRestaurantReq) throws BaseException {
+        try{
+            int result = restaurantDao.modifyRestaurant(patchRestaurantReq);
+
+            if(result == 0){
+                throw new BaseException(MODIFY_FAIL_RESTAURANT);
+            }
+        } catch(Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+
+    }
 }

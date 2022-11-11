@@ -7,8 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PostRestaurantRes {
-    private String jwt;
-    private int restaurant_id;
+public class PatchRestaurantReq {
 
+    private int restaurantId;
+    private String restaurantName;
 }
+

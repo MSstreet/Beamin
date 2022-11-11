@@ -2,8 +2,9 @@ package com.example.demo.src.restautant;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.src.restautant.model.GetRestaurantRes;
-import com.example.demo.src.user.model.GetUserRes;
+
 import com.example.demo.utils.JwtService;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,14 @@ public class RestaurantProvider {
         }
     }
 
+    public GetRestaurantRes getRestaurant(int restaurantId) throws BaseException{
+        try {
+            GetRestaurantRes getRestaurantRes = restaurantDao.getRestaurant(restaurantId);
+            return getRestaurantRes;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+
+    }
 }
 

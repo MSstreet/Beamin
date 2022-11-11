@@ -1,9 +1,9 @@
 package com.example.demo.src.restautant;
 
 import com.example.demo.src.restautant.model.GetRestaurantRes;
+import com.example.demo.src.restautant.model.PatchRestaurantReq;
 import com.example.demo.src.restautant.model.PostRestaurantReq;
-import com.example.demo.src.user.model.GetUserRes;
-import com.example.demo.src.user.model.PostUserReq;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -39,7 +39,6 @@ public class RestaurantDao {
         for(int i = 0; i < createRestaurantParams.length; i++){
             System.out.println(createRestaurantParams[i]);
         }
-
         this.jdbcTemplate.update(createUserQuery, createRestaurantParams);
 
         String lastInsertIdQuery = "select last_insert_id()";
@@ -62,7 +61,7 @@ public class RestaurantDao {
                         rs.getString("address"),
                         rs.getString("operation_time"),
                         rs.getString("introduction_board"),
-                        rs.getInt("tip_delivery"),
+                        rs.getString("tip_delivery"),
                         rs.getString("time_delivery"),
                         rs.getString("company_registration_number"),
                         rs.getString("categories"),
@@ -76,6 +75,45 @@ public class RestaurantDao {
                         rs.getInt("favorite_num"),
                         rs.getString("payment_method")));
         }
+
+    public GetRestaurantRes getRestaurant(int restaurantId){
+        String getRestaurantQuery = "select * from restaurant where ID = ?";
+
+        int getRestaurantParams = restaurantId;
+
+        return this.jdbcTemplate.queryForObject(getRestaurantQuery,
+                (rs, rowNum) -> new GetRestaurantRes(
+                        rs.getInt("restaurant_Id"),
+                        rs.getString("name"),
+                        rs.getString("number"),
+                        rs.getString("address"),
+                        rs.getString("operation_time"),
+                        rs.getString("introduction_board"),
+                        rs.getString("tip_delivery"),
+                        rs.getString("time_delivery"),
+                        rs.getString("company_registration_number"),
+                        rs.getString("categories"),
+                        rs.getInt("type"),
+                        rs.getString("restaurant_image"),
+                        rs.getString("min_delivery_price"),
+                        rs.getString("closed_day"),
+                        rs.getString("possible_delivery"),
+                        rs.getString("status"),
+                        rs.getString("facilities"),
+                        rs.getInt("favorite_num"),
+                        rs.getString("payment_method")),
+                getRestaurantParams);
+    }
+
+    public int modifyRestaurant(PatchRestaurantReq patchRestaurantReq){
+        String modifyUserNameQuery = "update restaurant set name = ? where Id = ? ";
+
+        Object[] modifyUserNameParams = new Object[]{patchRestaurantReq.getRestaurantId(), patchRestaurantReq.getRestaurantName()};
+
+        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
+    }
+
+
 }
 
 

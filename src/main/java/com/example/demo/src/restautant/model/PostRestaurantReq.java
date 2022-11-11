@@ -3,8 +3,7 @@ package com.example.demo.src.restautant.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
 
 @Getter
 @Setter
@@ -30,7 +29,7 @@ public class PostRestaurantReq {
     private String introductionBoard;
 
     // 배달비
-    private Integer tipDelivery;
+    private String tipDelivery;
 
     // 배달시간
     private String timeDelivery;
@@ -40,12 +39,6 @@ public class PostRestaurantReq {
 
     // 카테고리
     private String categories;
-
-//    // 생성일
-//    private LocalDateTime creationDate;
-//
-//    // 수정일
-//    private LocalDateTime modificationDate;
 
     // 배달,배민1,포장
     private Integer type;

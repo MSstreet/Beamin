@@ -3,9 +3,7 @@ package com.example.demo.src.restautant;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
-import com.example.demo.src.restautant.model.GetRestaurantRes;
-import com.example.demo.src.restautant.model.PostRestaurantReq;
-import com.example.demo.src.restautant.model.Restaurant;
+import com.example.demo.src.restautant.model.*;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
@@ -16,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.*;
-import static com.example.demo.config.BaseResponseStatus.USERS_EMPTY_USER_ADDRESS;
-import static com.example.demo.utils.ValidationRegex.*;
-import static com.example.demo.utils.ValidationRegex.isRegexNumber;
+
 
 @RestController
 @RequestMapping("/app/restaurant")
@@ -44,12 +40,17 @@ public class RestaurantController {
 
     @ResponseBody
     @PostMapping("/join")
-    public BaseResponse<PostRestaurantReq> createUser(@RequestBody PostRestaurantReq postRestaurantReq) {
+    public BaseResponse<PostRestaurantRes> createRestaurant(@RequestBody PostRestaurantReq postRestaurantReq) {
         // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
+        //가게이름길이
+        //전화번호 형식
+        //게시판길이
+        //사업자번호 형식
+        //...
 
         try{
-            PostUserRes postUserRes = restaurantService.createRestaurant(postRestaurantReq);
-            return new BaseResponse<>(postRestaurantReq);
+            PostRestaurantRes postRestaurantRes = restaurantService.createRestaurant(postRestaurantReq);
+            return new BaseResponse<>(postRestaurantRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
@@ -70,7 +71,7 @@ public class RestaurantController {
 
     @ResponseBody
     @PutMapping("/{restaurantId}")
-    public BaseResponse<String> modifyUserName(@PathVariable("restaurantId") int restaurantId, @RequestBody Restaurant restaurant){
+    public BaseResponse<String> modifyRestaurant(@PathVariable("restaurantId") int restaurantId, @RequestBody Restaurant restaurant){
 
         try {
             //jwt에서 idx 추출.
@@ -82,19 +83,29 @@ public class RestaurantController {
             }
 
             //같다면 유저네임 변경
-            PatchUserReq patchUserReq = new PatchUserReq(,.getNickName());
-            .modifyUserName(patchUserReq);
+            PatchRestaurantReq patchRestaurantReq = new PatchRestaurantReq(restaurantId,restaurant.getName());
+            restaurantService.modifyRestaurant(patchRestaurantReq);
 
-            String result = "닉네임을 변경했습니다.";
-
+            String result = "가게 상호를 변경했습니다.";
 
             return new BaseResponse<>(result);
-
 
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
 
+    @ResponseBody
+    @GetMapping("/{restaurantId}") // (GET) 127.0.0.1:9000/app/users/:userIdx
+    public GetRestaurantRes getRestaurant(@PathVariable("restaurantId") int restaurantId) {
+
+        try{
+            GetRestaurantRes getRestaurantRes = restaurantProvider.getRestaurant(restaurantId);
+            return getRestaurantRes;
+        } catch(BaseException exception){
+            return null;
+        }
+
+    }
 
 }

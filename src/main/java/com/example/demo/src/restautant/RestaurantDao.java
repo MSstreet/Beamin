@@ -77,7 +77,7 @@ public class RestaurantDao {
         }
 
     public GetRestaurantRes getRestaurant(int restaurantId){
-        String getRestaurantQuery = "select * from restaurant where ID = ?";
+        String getRestaurantQuery = "select * from restaurant where restaurant_Id = ?";
 
         int getRestaurantParams = restaurantId;
 
@@ -105,15 +105,30 @@ public class RestaurantDao {
                 getRestaurantParams);
     }
 
-    public int modifyRestaurant(PatchRestaurantReq patchRestaurantReq){
-        String modifyUserNameQuery = "update restaurant set name = ? where Id = ? ";
+    public int modifyRestaurant(PatchRestaurantReq patchRestaurantReq, int restaurantId){
+        String modifyUserNameQuery = "update restaurant set name = ? ,number = ?, address = ?, operation_time = ?, introduction_board = ?, tip_delivery = ?, time_delivery = ?,company_registration_number = ?," +
+                " categories = ?, type = ?,  restaurant_image = ?,  min_delivery_price = ?, closed_day = ?, possible_delivery = ?, status = ?, facilities = ?, favorite_num = ?,payment_method = ? where restaurant_Id = ? ";
 
-        Object[] modifyUserNameParams = new Object[]{patchRestaurantReq.getRestaurantId(), patchRestaurantReq.getRestaurantName()};
+        Object[] modifyUserNameParams = new Object[]{patchRestaurantReq.getName(),patchRestaurantReq.getNumber(),patchRestaurantReq.getAddress(),patchRestaurantReq.getOperationTime()
+                , patchRestaurantReq.getIntroductionBoard(),patchRestaurantReq.getTipDelivery(),patchRestaurantReq.getTimeDelivery(),patchRestaurantReq.getCompanyRegistrationNumber(),patchRestaurantReq.getCategories()
+                , patchRestaurantReq.getType(), patchRestaurantReq.getRestaurantImage(),patchRestaurantReq.getMinDeliveryPrice(),patchRestaurantReq.getClosedDay(),patchRestaurantReq.getPossibleDelivery(),patchRestaurantReq.getStatus()
+                , patchRestaurantReq.getFacilities(), patchRestaurantReq.getFavoriteNum(),patchRestaurantReq.getPaymentMethod(),patchRestaurantReq.getRestaurantId()};
 
-        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
+        for(int i = 0; i < modifyUserNameParams.length; i++){
+            System.out.println(modifyUserNameParams[i]);
+        }
+
+            return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
     }
 
 
+    public int deleteRestaurant(GetRestaurantRes getRestaurantRes){
+        String deleteRestaurantQuery = "delete from restaurant where restaurant_Id = ?";
+
+        int getRestaurantParams = getRestaurantRes.getRestaurantId();
+
+        return this.jdbcTemplate.update(deleteRestaurantQuery,getRestaurantParams);
+    }
 }
 
 

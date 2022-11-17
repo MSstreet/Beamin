@@ -3,11 +3,8 @@ package com.example.demo.src.menu;
 import com.example.demo.config.BaseException;
 import com.example.demo.src.menu.model.PostMenuReq;
 import com.example.demo.src.menu.model.PostMenuRes;
-import com.example.demo.src.restautant.model.PostRestaurantRes;
-import com.example.demo.src.user.model.PostUserReq;
-import com.example.demo.src.user.model.PostUserRes;
 import com.example.demo.utils.JwtService;
-import com.example.demo.utils.SHA256;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +37,6 @@ public class MenuService {
 //        }
 
         try{
-
             int restaurantIdx = menuDao.createMenu(postMenuReq);
 
             //jwt 발급.
@@ -54,5 +50,20 @@ public class MenuService {
 
     }
 
+    public void modifyMenu(PostMenuReq postMenuReq) throws BaseException {
+
+        try{
+            int result = menuDao.modifyMenu(postMenuReq);
+
+            //System.out.println(result);
+
+            if(result == 0){
+                throw new BaseException(MODIFY_FAIL_RESTAURANT);
+            }
+        } catch(Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+
+    }
 
 }

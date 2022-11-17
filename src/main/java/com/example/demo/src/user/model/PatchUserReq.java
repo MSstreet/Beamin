@@ -11,4 +11,5 @@ public class PatchUserReq {
 
     private int userIdx;
     private String userName;
+
 }

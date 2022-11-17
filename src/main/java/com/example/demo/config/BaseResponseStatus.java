@@ -52,6 +52,30 @@ public enum BaseResponseStatus {
     POST_USERS_EXISTS_EMAIL(false,2023,"중복된 이메일입니다."),
 
 
+    POST_RESTAURANT_EMPTY_NAME(false,2024,"가게 이름을 입력해주세요."),
+    POST_RESTAURANT_EMPTY_NUMBER(false,2025,"전화번호를 입력해주세요."),
+    POST_RESTAURANT_EMPTY_ADDRESS(false,2026,"주소를 입력해주세요."),
+    POST_RESTAURANT_EMPTY_OPERATIONTIME(false,2027,"운영시간을 입력해주세요"),
+    POST_RESTAURANT_EMPTY_INTRODUCTIONBOARD(false,2028,"가게 소개글을 입력해주세요"),
+    POST_RESTAURANT_EMPTY_TIPDELIVERY(false,2029,"배달비를 입력해주세요"),
+    POST_RESTAURANT_EMPTY_TIMEDELIVERY(false,2030,"배달시간을 입력해주세요"),
+    POST_RESTAURANT_EMPTY_COMPANYREGISTRATIONNUMBER(false,2031,"사업자번호를 입력해주세요"),
+    POST_RESTAURANT_EMPTY_CATEGORIES(false,2032,"카테고리를 입력해주세요"),
+    POST_RESTAURANT_EMPTY_TYPE(false,2033,"배달,포장,배달1 중 종류를 입력해주세요"),
+    POST_RESTAURANT_EMPTY_RESTAURANTIMAGE(false,2034,"가게 이미지를 입력해주세요"),
+    POST_RESTAURANT_EMPTY_MINDELIVERYPRICE(false,2035,"최소 배달비를 입력해주세요"),
+    POST_RESTAURANT_EMPTY_CLOSEDDAY(false,2036,"휴업일을 입력해주세요"),
+    POST_RESTAURANT_EMPTY_POSSIBLEDELIVERY(false,2037,"배달 가능 지역을 입력해주세요"),
+    POST_RESTAURANT_EMPTY_STATUS(false,2038,"상태를 입력해주세요"),
+    POST_RESTAURANT_EMPTY_FACILITIES(false,2039,"편의시설을 입력해주세요"),
+    POST_RESTAURANT_EMPTY_FAVORITENUM(false,2040," 입력해주세요"),
+    POST_RESTAURANT_EMPTY_PAYMENTMETHOD(false,2041,"결제방법을 입력해주세요"),
+
+    POST_MENU_INVALID_PRICE(false,2042,"숫자만 입력 가능합니다."),
+
+
+
+
 
     /**
      * 3000 : Response 오류

@@ -4,7 +4,6 @@ import com.example.demo.config.BaseException;
 import com.example.demo.src.restautant.model.GetRestaurantRes;
 
 import com.example.demo.utils.JwtService;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

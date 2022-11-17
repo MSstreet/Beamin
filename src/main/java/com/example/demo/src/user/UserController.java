@@ -16,7 +16,7 @@ import java.util.List;
 import static com.example.demo.config.BaseResponseStatus.*;
 import static com.example.demo.utils.ValidationRegex.*;
 import static com.example.demo.utils.ValidationRegex.isRegexNumber;
-import java.lang.System;
+
 
 
 @RestController
@@ -54,10 +54,10 @@ public class UserController {
                 List<GetUserRes> getUsersRes = userProvider.getUsers();
                 return new BaseResponse<>(getUsersRes);
             }
+
             // Get Users
             List<GetUserRes> getUsersRes = userProvider.getUsersByEmail(Email);
             return new BaseResponse<>(getUsersRes);
-
 
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
@@ -80,7 +80,6 @@ public class UserController {
         } catch(BaseException exception){
             return null;
         }
-
     }
 
     /**
@@ -108,9 +107,6 @@ public class UserController {
         if(postUserReq.getLoginId().length() == 0 || postUserReq.getLoginId() == null){
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
-        System.out.println("===============================================================");
-        System.out.println(postUserReq.getLoginId().getClass().getName());
-        System.out.println(postUserReq.getLoginId().length());
 
         //아이디 정규표현
         if(!isRegexId(postUserReq.getLoginId())){
@@ -174,6 +170,7 @@ public class UserController {
                 return new BaseResponse<>(USERS_EMPTY_USER_ID);
             }
 
+
             //아이디 정규표현
             if(!isRegexId(postLoginReq.getLogin_id())){
                 return new BaseResponse<>(POST_USERS_INVALID_ID);
@@ -189,7 +186,8 @@ public class UserController {
                 return new BaseResponse<>(USERS_EMPTY_USER_PASSWORD);
             }
 
-            PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
+
+            PostLoginRes postLoginRes = userService.logIn(postLoginReq);
             return new BaseResponse<>(postLoginRes);
 
         } catch (BaseException exception){
@@ -204,22 +202,50 @@ public class UserController {
      */
     @ResponseBody
     @PutMapping("/{Id}")
-    public BaseResponse<String> modifyUserName(@PathVariable("Id") int Id, @RequestBody User user){
+    public BaseResponse<String> modifyUserName(@PathVariable("Id") int Id, @RequestBody PutUserReq putUserReq){
 
         try {
-            //jwt에서 idx 추출.
-            //int userIdxByJwt = jwtService.getUserIdx();
-            //userIdx와 접근한 유저가 같은지 확인
+            int userIdxByJwt = jwtService.getUserIdx();
 
-            if(Id != user.getId()){
+            if(Id != userIdxByJwt){
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
 
-            //같다면 유저네임 변경
-            PatchUserReq patchUserReq = new PatchUserReq(Id,user.getNickName());
-            userService.modifyUserName(patchUserReq);
+//            GetUserRes getUserRes = getUser(Id);
+//
+//            if(!(getUserRes.getPassword().equals(putUserReq.getPassword()))){
+//                return new BaseResponse<>(INVALID_USER_JWT);
+//            }
 
-            String result = "닉네임을 변경했습니다.";
+            //닉네임 널 여부
+            if(putUserReq.getNickName() == null || putUserReq.getNickName().length() == 0) {
+                return new BaseResponse<>(USERS_EMPTY_USER_NICKNAME);
+            }
+
+            //폰 번호 널 여부
+            if(putUserReq.getMobilePhone() == null || putUserReq.getMobilePhone().length() == 0) {
+                return new BaseResponse<>(USERS_EMPTY_USER_MOBILEPHONE);
+            }
+
+            //폰 번호 정규표현
+            if(!isRegexNumber(putUserReq.getMobilePhone())) {
+                return new BaseResponse<>(POST_USERS_INVALID_MOBILEPHONE);
+            }
+
+            //이메일 null 확인
+            if(putUserReq.getEmail() == null || putUserReq.getEmail().length() == 0) {
+                return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
+            }
+
+            //이메일 정규표현
+            if(!isRegexEmail(putUserReq.getEmail())) {
+                return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
+            }
+
+
+            userService.modifyUserName(putUserReq);
+
+            String result = "유저 정보를 변경하였습니다.";
 
 
             return new BaseResponse<>(result);
@@ -233,15 +259,10 @@ public class UserController {
     @ResponseBody
     @PatchMapping("/{Id}")
     public BaseResponse<String> deleteUser(@PathVariable("Id") int Id,  @RequestBody User user){
+
         try {
 
             GetUserRes getUserRes = getUser(Id);
-
-            System.out.println(getUserRes.getPassword());
-            System.out.println(user.getPassword());
-
-            System.out.println(getUserRes.getPassword().getClass().getName());
-            System.out.println(user.getPassword().getClass().getName());
 
             if(!(getUserRes.getPassword().equals(user.getPassword()))){ //String 비교 방법 컴퓨터가 우리한테 보여주기 위해 표시되는것과 그 안?에 내용은 다를 수 있다
                 return new BaseResponse<>(INVALID_USER_JWT);

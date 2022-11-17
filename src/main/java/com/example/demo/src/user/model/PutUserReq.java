@@ -1,20 +1,17 @@
 package com.example.demo.src.user.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class PostUserReq {
-    // 로그인ID
-    private String loginId;
+public class PutUserReq {
+
+    // 회원 고유 번호
+    private Integer id;
+
     // 비밀번호
     private String password;
 
@@ -24,15 +21,8 @@ public class PostUserReq {
     // 핸드폰번호
     private String mobilePhone;
 
-    // 현 주소
-    private String address;
-
     // 메일
     private String email;
-
-    // 등급
-    private String grade;
-
 
     // 메일 수신 여부
     private Boolean mailStatus;
@@ -40,6 +30,7 @@ public class PostUserReq {
     // SMS 수신 여부
     private Boolean smsStatus;
 
+    // 프로필 사진
     private String profileImage;
 
 }

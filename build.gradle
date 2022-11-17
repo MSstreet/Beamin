@@ -55,12 +55,15 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
 
-
-
+    testImplementation('junit:junit:4.13')
 
 
 }
 
 test {
+    useJUnitPlatform()
+}
+
+tasks.named('test') {
     useJUnitPlatform()
 }

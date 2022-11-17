@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PostMenuRes {
+
     private String jwt;
     // 메뉴 고유 번호
     private Integer menuId;

@@ -3,12 +3,11 @@ package com.example.demo.src.user;
 
 import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Repository
@@ -65,22 +64,22 @@ public class UserDao {
 
     public int createUser(PostUserReq postUserReq){
 
-        String createUserQuery = "insert into user (login_id,password,nick_name,mobile_phone,address,email,grade,mail_status,sms_status) VALUES (?,?,?,?,?,?,?,?,?)";
+        String createUserQuery = "insert into user (login_id,password,nick_name,mobile_phone,address,email,grade,mail_status,sms_status, profile_image) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-        System.out.println(createUserQuery);
+//        System.out.println(createUserQuery);
 
         Object[] createUserParams = new Object[]{postUserReq.getLoginId(), postUserReq.getPassword(),postUserReq.getNickName()
-                ,postUserReq.getMobilePhone(),postUserReq.getAddress(),postUserReq.getEmail(),postUserReq.getGrade(), postUserReq.getMailStatus(),postUserReq.getSmsStatus()};
+                ,postUserReq.getMobilePhone(),postUserReq.getAddress(),postUserReq.getEmail(),postUserReq.getGrade(), postUserReq.getMailStatus(),postUserReq.getSmsStatus(),postUserReq.getProfileImage()};
 
-        for(int i = 0; i < createUserParams.length; i++){
-            System.out.println(createUserParams[i]);
-        }
+//        for(int i = 0; i < createUserParams.length; i++){
+//            System.out.println(createUserParams[i]);
+//        }
 
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
        String lastInsertIdQuery = "select last_insert_id()";
 
-        System.out.println(lastInsertIdQuery);
+//        System.out.println(lastInsertIdQuery);
 
         return this.jdbcTemplate.queryForObject(lastInsertIdQuery,int.class);
     }
@@ -115,6 +114,7 @@ public class UserDao {
     public int checkId(String loginId){
 
         String checkIdQuery = "select exists(select login_id from user where login_id = ?)";
+
         String checkIdParams = loginId;
 
         System.out.println(checkIdQuery);
@@ -125,12 +125,15 @@ public class UserDao {
 
     }
 
-    public int modifyUserName(PatchUserReq patchUserReq){
-        String modifyUserNameQuery = "update user set nick_name = ? where Id = ? ";
+    public int modifyUserName(PutUserReq putUserReq){
+        String modifyUserNameQuery = "update user set nick_name = ?, mobile_phone = ?, email = ?, mail_status = ?, sms_status = ?, profile_image =? where ID = ? ";
 
-        Object[] modifyUserNameParams = new Object[]{patchUserReq.getUserName(), patchUserReq.getUserIdx()};
+
+        Object[] modifyUserNameParams = new Object[]{putUserReq.getNickName(), putUserReq.getMobilePhone(),putUserReq.getEmail()
+        ,putUserReq.getMailStatus(), putUserReq.getSmsStatus(), putUserReq.getProfileImage(),putUserReq.getId()};
 
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
+
     }
 
     public User getPwd(PostLoginReq postLoginReq){
@@ -153,8 +156,10 @@ public class UserDao {
                             rs.getString("profile_image")),
                     getPwdParams);
     }
+
     public int deleteUser(GetUserRes getUserRes){
         String deleteUserQuery = "delete from user where Id = ?";
+
         int getUserParams = getUserRes.getID();
 
         return this.jdbcTemplate.update(deleteUserQuery,getUserParams);

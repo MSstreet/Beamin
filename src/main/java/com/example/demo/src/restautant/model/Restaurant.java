@@ -29,7 +29,7 @@ public class Restaurant {
     private String introductionBoard;
 
     // 배달비
-    private Integer tipDelivery;
+    private String tipDelivery;
 
     // 배달시간
     private String timeDelivery;

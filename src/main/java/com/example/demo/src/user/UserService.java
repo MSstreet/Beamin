@@ -47,7 +47,6 @@ public class UserService {
             throw new BaseException(POST_USERS_EXISTS_MOBILEPHONE);
         }
 
-
         String pwd;
 
         try{
@@ -64,9 +63,9 @@ public class UserService {
             int userIdx = userDao.createUser(postUserReq);
 
             //jwt 발급.
-            String jwt = jwtService.createJwt(userIdx);
+            //String jwt = jwtService.createJwt(userIdx);
 
-            return new PostUserRes(jwt,userIdx);
+            return new PostUserRes(userIdx);
 
 
         } catch (Exception exception) {
@@ -74,12 +73,19 @@ public class UserService {
         }
     }
 
-    public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
+    public void modifyUserName(PutUserReq putUserReq) throws BaseException {
+
+//        if(userProvider.checkMobilePhone(putUserReq.getMobilePhone()) ==1){
+//            throw new BaseException(POST_USERS_EXISTS_MOBILEPHONE);
+//        }
+
         try{
-            int result = userDao.modifyUserName(patchUserReq);
+            int result = userDao.modifyUserName(putUserReq);
+
             if(result == 0){
                 throw new BaseException(MODIFY_FAIL_USERNAME);
             }
+
         } catch(Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
@@ -92,9 +98,38 @@ public class UserService {
             if(result == 0){
                 throw new BaseException(MODIFY_FAIL_USERNAME);
             }
-            System.out.println("asdfasdfasdfasdfasdfasdf");
+
         } catch(Exception exception){
             throw new BaseException(DATABASE_ERROR);
+        }
+
+    }
+
+    public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
+
+        User user = userDao.getPwd(postLoginReq);
+
+        String encryptPwd;
+
+        try {
+            encryptPwd=new SHA256().encrypt(postLoginReq.getPassword());
+
+        } catch (Exception ignored) {
+            throw new BaseException(PASSWORD_DECRYPTION_ERROR);
+        }
+
+
+        //System.out.println(encryptPwd);
+
+        if(user != null && user.getPassword().equals(encryptPwd)){
+            int userIdx = user.getId();
+            String jwt = jwtService.createJwt(userIdx);
+
+            return new PostLoginRes(userIdx,jwt);
+        }
+
+        else{
+            throw new BaseException(FAILED_TO_LOGIN);
         }
 
     }

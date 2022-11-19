@@ -2,24 +2,22 @@ package com.example.demo.src.shoppingBasket.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ShoppingBasketRes {
 
     // 장바구니ID
     private Integer shoppingBasketId;
 
-    // 유저 고유 번호
-    private Integer userId;
+    //private Integer restaurantId;
 
-    // 메뉴 고유 번호
     private Integer menuId;
 
-    private int restaurantId;
+    private int count;
 
-    // 물품 수량
-    private Integer count;
 }

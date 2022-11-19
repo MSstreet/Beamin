@@ -59,6 +59,22 @@ public class MenuDao {
 
     }
 
+    public GetMenuRes getMenuByMenuId(int menuId){
+        String getMenusQuery = "select * from menu where menu_Id = ?";
+
+        int getMenuParam = menuId;
+
+        return this.jdbcTemplate.queryForObject(getMenusQuery,
+                (rs, rowNum) -> new GetMenuRes(
+                        rs.getInt("menu_Id"),
+                        rs.getInt("restaurant_Id"),
+                        rs.getString("name"),
+                        rs.getInt("price"),
+                        rs.getBoolean("popularity"),
+                        rs.getString("content")),
+                getMenuParam);
+    }
+
     public GetMenuRes getRestaurantMenu(int restaurantId) {
 
         String getMenusQuery = "select * from menu where restaurant_id = ?";

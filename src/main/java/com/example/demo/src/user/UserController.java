@@ -71,11 +71,11 @@ public class UserController {
      */
     // Path-variable
     @ResponseBody
-    @GetMapping("/{Id}") // (GET) 127.0.0.1:9000/app/users/:userIdx
-    public GetUserRes getUser(@PathVariable("Id") int Id) {
+    @GetMapping("/{userId}") // (GET) 127.0.0.1:9000/app/users/:userIdx
+    public GetUserRes getUser(@PathVariable("userId") int userId) {
         // Get Users
         try{
-            GetUserRes getUserRes = userProvider.getUser(Id);
+            GetUserRes getUserRes = userProvider.getUser(userId);
             return getUserRes;
         } catch(BaseException exception){
             return null;
@@ -97,6 +97,8 @@ public class UserController {
         if(postUserReq.getEmail() == null || postUserReq.getEmail().length() == 0) {
             return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
         }
+
+
 
         //이메일 정규표현
         if(!isRegexEmail(postUserReq.getEmail())) {
@@ -169,6 +171,7 @@ public class UserController {
             if(postLoginReq.getLogin_id() == null || postLoginReq.getLogin_id().length() == 0){
                 return new BaseResponse<>(USERS_EMPTY_USER_ID);
             }
+
 
 
             //아이디 정규표현
@@ -258,17 +261,17 @@ public class UserController {
 
     @ResponseBody
     @PatchMapping("/{Id}")
-    public BaseResponse<String> deleteUser(@PathVariable("Id") int Id,  @RequestBody User user){
+    public BaseResponse<String> deleteUser(@PathVariable("Id") int Id){
 
         try {
 
-            GetUserRes getUserRes = getUser(Id);
+            int userIdxByJwt = jwtService.getUserIdx();
 
-            if(!(getUserRes.getPassword().equals(user.getPassword()))){ //String 비교 방법 컴퓨터가 우리한테 보여주기 위해 표시되는것과 그 안?에 내용은 다를 수 있다
+            if(Id != userIdxByJwt){
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
 
-            userService.deleteUser(getUserRes);
+            userService.deleteUser(Id);
 
             String result = "계정을 삭제하였습니다.";
 

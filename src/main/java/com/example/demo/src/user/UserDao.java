@@ -157,12 +157,12 @@ public class UserDao {
                     getPwdParams);
     }
 
-    public int deleteUser(GetUserRes getUserRes){
+    public int deleteUser(int userId){
         String deleteUserQuery = "delete from user where Id = ?";
 
-        int getUserParams = getUserRes.getID();
+        //int getUserParams = getUserRes.getID();
 
-        return this.jdbcTemplate.update(deleteUserQuery,getUserParams);
+        return this.jdbcTemplate.update(deleteUserQuery,userId);
     }
 
 

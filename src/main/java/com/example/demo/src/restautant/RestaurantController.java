@@ -47,20 +47,7 @@ public class RestaurantController {
         //전화번호형식
 
         try{
-
-//        Object[] tmpObject = new Object[]{postRestaurantReq.getName(), postRestaurantReq.getNumber(),postRestaurantReq.getAddress(),postRestaurantReq.getOperationTime()
-//                ,postRestaurantReq.getIntroductionBoard(),postRestaurantReq.getTipDelivery(),postRestaurantReq.getTimeDelivery(),postRestaurantReq.getCompanyRegistrationNumber(),postRestaurantReq.getCategories()
-//                ,postRestaurantReq.getType(),postRestaurantReq.getRestaurantImage(),postRestaurantReq.getMinDeliveryPrice(),postRestaurantReq.getClosedDay()
-//                ,postRestaurantReq.getPossibleDelivery(),postRestaurantReq.getStatus(),postRestaurantReq.getFacilities(),postRestaurantReq.getFavoriteNum()
-//                ,postRestaurantReq.getPaymentMethod()};
-//
-//       for(int i = 0; i < tmpObject.length; i ++) {
-//
-//           if (tmpObject[i] == "") {
-//
-//
-//           }
-//       }
+            
             PostRestaurantRes postRestaurantRes = restaurantService.createRestaurant(postRestaurantReq);
 
             return new BaseResponse<>(postRestaurantRes);

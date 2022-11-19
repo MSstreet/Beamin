@@ -18,14 +18,14 @@ public class ShoppingBasket {
     // 메뉴 고유 번호
     private Integer menuId;
 
-    private int restaurantId;
+    //private Integer restaurantId;
 
     // 물품 수량
-    private Integer count;
+    private int count;
 
     private String menuName;
 
-    private int menuPrice;
+    //private int menuPrice;
 
     private int totalPrice;
 }

@@ -1,13 +1,16 @@
 package com.example.demo.src.shoppingBasket.model;
 
+import com.example.demo.src.menu.model.GetMenuRes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 @Getter
 @Setter
-//@AllArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShoppingBasketDto {
 
     // 장바구니ID
@@ -19,22 +22,20 @@ public class ShoppingBasketDto {
     // 메뉴 고유 번호
     private Integer menuId;
 
-    private int restaurantId;
+    //private Integer restaurantId;
 
     // 물품 수량
-    private Integer count;
+    private int count;
 
    private String menuName;
 
-
-
-   private int menuPrice;
+   //private int menuPrice;
 
    private int totalPrice;
 
 
-   public void initSaleTotal(){
+   public void initSaleTotal(GetMenuRes getMenuRes){
 
-       this.totalPrice = this.menuPrice * this.count;
+       this.totalPrice = getMenuRes.getPrice() * this.count;
    }
 }

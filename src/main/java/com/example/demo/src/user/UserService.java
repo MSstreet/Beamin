@@ -91,9 +91,9 @@ public class UserService {
         }
     }
 
-    public void deleteUser(GetUserRes getUserRes) throws BaseException {
+    public void deleteUser(int userID) throws BaseException {
         try{
-            int result = userDao.deleteUser(getUserRes);
+            int result = userDao.deleteUser(userID);
 
             if(result == 0){
                 throw new BaseException(MODIFY_FAIL_USERNAME);

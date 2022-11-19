@@ -38,7 +38,6 @@ public class MenuOptionController {
     @PostMapping("/join")
     public BaseResponse<PostMenuOptionRes> createMenuOption(@RequestBody PostMenuOptionReq postMenuOptionReq) {
         // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
-
         try{
 
             PostMenuOptionRes postMenuOptionRes = menuOptionService.createMenuOption(postMenuOptionReq);
@@ -50,9 +49,8 @@ public class MenuOptionController {
     }
 
     @ResponseBody
-    @PutMapping("/{menuOptionId}")
-    public BaseResponse<String> modifyMenu(@PathVariable("menuOptionId") int menuOptionId, @RequestBody PostMenuOptionReq postMenuOptionReq){
-
+    @PutMapping("/{menuoptionId}")
+    public BaseResponse<String> modifyMenu(@PathVariable("menuoptionId") int menuoptionId, @RequestBody PostMenuOptionReq postMenuOptionReq){
         try{
 
             menuOptionService.modifyMenuOption(postMenuOptionReq);
@@ -69,7 +67,6 @@ public class MenuOptionController {
     @ResponseBody
     @PatchMapping("/{menuOptionId}")
     public BaseResponse<String> deleteDeleteMenuOption(@PathVariable("menuOptionId") int menuOptionId){
-
         try {
 
             menuOptionDao.deleteMenuOption(menuOptionId);

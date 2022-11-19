@@ -2,12 +2,14 @@ package com.example.demo.src.restautant.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class PostRestaurantReq {
 
     // 가게 고유 번호

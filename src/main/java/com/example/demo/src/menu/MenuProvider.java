@@ -39,6 +39,16 @@ public class MenuProvider {
         }
     }
 
+    public GetMenuRes getMenuByMenuId(int menu_Id) throws BaseException{
+
+        try{
+            GetMenuRes getMenuRes = menuDao.getMenuByMenuId(menu_Id);
+            return getMenuRes;
+        }catch (Exception exception){
+            throw  new BaseException(DATABASE_ERROR);
+        }
+    }
+
     public GetMenuRes getRestaurantMenu(int restaurantId) throws  BaseException{
 
         try{

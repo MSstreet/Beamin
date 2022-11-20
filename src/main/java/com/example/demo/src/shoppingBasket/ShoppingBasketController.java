@@ -2,10 +2,8 @@ package com.example.demo.src.shoppingBasket;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
-import com.example.demo.src.restautant.model.GetRestaurantRes;
 import com.example.demo.src.shoppingBasket.model.ShoppingBasketDto;
 import com.example.demo.src.shoppingBasket.model.ShoppingBasketRes;
-import com.example.demo.src.user.model.GetUserRes;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +36,7 @@ public class ShoppingBasketController {
     @PostMapping("/{userId}/join")
     public BaseResponse<ShoppingBasketRes> createRestaurant(@PathVariable("userId") int userId,@RequestBody ShoppingBasketDto shoppingBasketDto) {
         // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
-        //전화번호형식, 사업자번호형식, 소개글제한,
 
-        //전화번호형식
-        //로그인 여부 확인
         try {
 
             int userIdxByJwt = jwtService.getUserIdx();
@@ -79,18 +74,45 @@ public class ShoppingBasketController {
         }catch (BaseException exception) {
                 return new BaseResponse<>((exception.getStatus()));
             }
-
     }
 
     @ResponseBody
-    @PatchMapping("/{shoppingBasketId}")
-    public BaseResponse<String> deleteRestaurant(@PathVariable("shoppingBasketId") int shoppingBasketId){
+    @PatchMapping("/{userId}/{shoppingBasketId}")
+    public BaseResponse<String> deleteRestaurant(@PathVariable("userId") int userId, @PathVariable("shoppingBasketId") int shoppingBasketId){
 
         try {
+            int userIdxByJwt = jwtService.getUserIdx();
+
+            if(userId != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
 
             shoppingBasketService.deleteShoppingBasket(shoppingBasketId);
 
-            String result = "레스토랑을 삭제하였습니다.";
+            String result = "요청하신 메뉴를 삭제하였습니다.";
+
+            return new BaseResponse<>(result);
+
+
+        }catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @ResponseBody
+    @PutMapping("/{userId}/{shoppingBasketId}")
+    public BaseResponse<String> modifyShoppingBasket(@PathVariable("userId") int userId, @PathVariable("shoppingBasketId") int shoppingBasketId, @RequestBody ShoppingBasketDto shoppingBasketDto){
+
+        try {
+            int userIdxByJwt = jwtService.getUserIdx();
+
+            if(userId != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+
+            shoppingBasketService.modifyShoppingBasket(shoppingBasketDto);
+
+            String result = "요청하신 메뉴를 삭제하였습니다.";
 
             return new BaseResponse<>(result);
 

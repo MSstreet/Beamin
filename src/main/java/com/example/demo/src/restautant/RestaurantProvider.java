@@ -40,6 +40,19 @@ public class RestaurantProvider {
         }
     }
 
+    public List<GetRestaurantRes> getRestaurantsBySearch(String search) throws BaseException {
+
+        try{
+            List<GetRestaurantRes> getRestaurantRes = restaurantDao.getRestaurantsBySearch(search);
+
+            System.out.println("==================================================================================");
+            return getRestaurantRes;
+        }
+        catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
     public GetRestaurantRes getRestaurant(int restaurantId) throws BaseException{
         try {
             GetRestaurantRes getRestaurantRes = restaurantDao.getRestaurant(restaurantId);

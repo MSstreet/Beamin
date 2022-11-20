@@ -23,8 +23,6 @@ public class UserDao {
     public List<GetUserRes> getUsers(){
 
         String getUsersQuery = "select * from user";
-
-
         return this.jdbcTemplate.query(getUsersQuery,
                 (rs,rowNum) -> new GetUserRes(
                         rs.getInt("ID"),
@@ -66,14 +64,8 @@ public class UserDao {
 
         String createUserQuery = "insert into user (login_id,password,nick_name,mobile_phone,address,email,grade,mail_status,sms_status, profile_image) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-//        System.out.println(createUserQuery);
-
         Object[] createUserParams = new Object[]{postUserReq.getLoginId(), postUserReq.getPassword(),postUserReq.getNickName()
                 ,postUserReq.getMobilePhone(),postUserReq.getAddress(),postUserReq.getEmail(),postUserReq.getGrade(), postUserReq.getMailStatus(),postUserReq.getSmsStatus(),postUserReq.getProfileImage()};
-
-//        for(int i = 0; i < createUserParams.length; i++){
-//            System.out.println(createUserParams[i]);
-//        }
 
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
@@ -109,7 +101,6 @@ public class UserDao {
                 checkParams);
 
     }
-
 
     public int checkId(String loginId){
 
@@ -164,6 +155,4 @@ public class UserDao {
 
         return this.jdbcTemplate.update(deleteUserQuery,userId);
     }
-
-
 }

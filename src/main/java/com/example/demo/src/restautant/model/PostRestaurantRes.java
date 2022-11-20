@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PostRestaurantRes {
+
     private String jwt;
     private int restaurant_id;
 

@@ -76,6 +76,39 @@ public class RestaurantDao {
                         rs.getString("payment_method")));
         }
 
+    public List<GetRestaurantRes> getRestaurantsBySearch(String search){
+
+        String getRestaurantQuery = "select * from restaurant where name like ?";
+
+        System.out.println(getRestaurantQuery);
+        System.out.println(search);
+        String Param = "%"+search+"%";
+        System.out.println(Param);
+
+        return this.jdbcTemplate.query(getRestaurantQuery,
+                (rs,rowNum) -> new GetRestaurantRes(
+                        rs.getInt("restaurant_Id"),
+                        rs.getString("name"),
+                        rs.getString("number"),
+                        rs.getString("address"),
+                        rs.getString("operation_time"),
+                        rs.getString("introduction_board"),
+                        rs.getString("tip_delivery"),
+                        rs.getString("time_delivery"),
+                        rs.getString("company_registration_number"),
+                        rs.getString("categories"),
+                        rs.getInt("type"),
+                        rs.getString("restaurant_image"),
+                        rs.getString("min_delivery_price"),
+                        rs.getString("closed_day"),
+                        rs.getString("possible_delivery"),
+                        rs.getString("status"),
+                        rs.getString("facilities"),
+                        rs.getInt("favorite_num"),
+                        rs.getString("payment_method")),Param);
+    }
+
+
     public GetRestaurantRes getRestaurant(int restaurantId){
         String getRestaurantQuery = "select * from restaurant where restaurant_Id = ?";
 

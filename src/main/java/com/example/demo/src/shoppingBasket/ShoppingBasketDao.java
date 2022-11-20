@@ -24,8 +24,6 @@ public class ShoppingBasketDao {
 
         String createShoppingBasketQuery = "insert into shopping_basket (user_Id, menu_Id, count) VALUES(?,?,?)";
 
-
-
         Object[] createShoppingBasketParams = new Object[]{shoppingBasketDto.getUserId(),shoppingBasketDto.getMenuId()
         ,shoppingBasketDto.getCount()};
 
@@ -99,9 +97,22 @@ public class ShoppingBasketDao {
 
         int getShoppingBasketParams = menuId;
 
-        System.out.println("=========================================================================");
-
         return this.jdbcTemplate.queryForObject(getShoppingBasketsQuery,
+                (rs, rowNum) -> new ShoppingBasketRes(
+                        rs.getInt("shopping_basket_id"),
+                        rs.getInt("menu_Id"),
+                        rs.getInt("count")) ,getShoppingBasketParams);
+    }
+
+
+
+    public List<ShoppingBasketRes> getShoppingBasketByUserId(int userID){
+
+        String getShoppingBasketsQuery = "select * from shopping_basket where user_Id = ?";
+
+        int getShoppingBasketParams = userID;
+
+        return this.jdbcTemplate.query(getShoppingBasketsQuery,
                 (rs, rowNum) -> new ShoppingBasketRes(
                         rs.getInt("shopping_basket_id"),
                         rs.getInt("menu_Id"),
@@ -115,18 +126,7 @@ public class ShoppingBasketDao {
         return this.jdbcTemplate.queryForObject(checkShoppingBasketQuery,int.class,shoppingBasketDto.getUserId());
 
     }
-    public List<ShoppingBasketRes> getShoppingBasketByUserId(int userID){
 
-        String getShoppingBasketsQuery = "select * from shopping_basket where user_Id = ?";
-
-        int getShoppingBasketParams = userID;
-
-        return this.jdbcTemplate.query(getShoppingBasketsQuery,
-                (rs, rowNum) -> new ShoppingBasketRes(
-                        rs.getInt("shopping_basket_id"),
-                        rs.getInt("menu_Id"),
-                        rs.getInt("count")) ,getShoppingBasketParams);
-    }
 
 }
 

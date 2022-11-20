@@ -1,6 +1,5 @@
 package com.example.demo.src.user;
 
-import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.demo.config.BaseException;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 import static com.example.demo.config.BaseResponseStatus.*;
 import static com.example.demo.utils.ValidationRegex.*;
@@ -98,8 +96,6 @@ public class UserController {
             return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
         }
 
-
-
         //이메일 정규표현
         if(!isRegexEmail(postUserReq.getEmail())) {
             return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
@@ -171,8 +167,6 @@ public class UserController {
             if(postLoginReq.getLogin_id() == null || postLoginReq.getLogin_id().length() == 0){
                 return new BaseResponse<>(USERS_EMPTY_USER_ID);
             }
-
-
 
             //아이디 정규표현
             if(!isRegexId(postLoginReq.getLogin_id())){

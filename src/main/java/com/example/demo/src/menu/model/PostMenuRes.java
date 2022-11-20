@@ -1,6 +1,5 @@
 package com.example.demo.src.menu.model;
 
-import com.example.demo.src.restautant.model.Restaurant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

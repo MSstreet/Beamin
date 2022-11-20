@@ -18,6 +18,10 @@ public class ShoppingBasket {
     // 메뉴 고유 번호
     private Integer menuId;
 
+//    private Integer menuOptionId;
+//
+//    private Integer menuOptionDetailId;
+
     //private Integer restaurantId;
 
     // 물품 수량

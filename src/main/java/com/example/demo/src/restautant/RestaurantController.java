@@ -11,9 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.demo.config.BaseResponseStatus.*;
+
 
 
 @RestController
@@ -42,9 +43,7 @@ public class RestaurantController {
     @PostMapping("/join")
     public BaseResponse<PostRestaurantRes> createRestaurant(@RequestBody PostRestaurantReq postRestaurantReq) {
         // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
-        //전화번호형식, 사업자번호형식, 소개글제한,
 
-        //전화번호형식
 
         try{
             
@@ -66,13 +65,48 @@ public class RestaurantController {
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
+    }
 
+    @ResponseBody
+    @GetMapping("/best_restaurant") // (GET) 127.0.0.1:9000/app/users
+    public BaseResponse<List<GetRestaurantRes>> getBestRestaurants() {
+        try{
+
+            List<GetRestaurantRes> getRestaurantRes1 = new ArrayList<>();
+            List<GetRestaurantRes> getRestaurantRes = restaurantProvider.getRestaurants();
+
+            for(int i = 0; i < getRestaurantRes.size(); i++){
+
+                if(getRestaurantRes.get(i).getFavoriteNum() > 4){
+                    getRestaurantRes1.add(getRestaurantRes.get(i));
+                }
+
+            }
+            return new BaseResponse<>(getRestaurantRes1);
+
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/search") // (GET) 127.0.0.1:9000/app/users
+    public BaseResponse<List<GetRestaurantRes>> getRestaurantsBySearch(@RequestParam String searchRestaurantReq) {
+        try{
+
+            //String search = searchRestaurantReq.getSearch();
+
+            List<GetRestaurantRes> getRestaurantRes = restaurantProvider.getRestaurantsBySearch(searchRestaurantReq);
+            return new BaseResponse<>(getRestaurantRes);
+
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
     }
 
     @ResponseBody
     @PutMapping("/{restaurantId}")
     public BaseResponse<String> modifyRestaurant(@PathVariable("restaurantId") int restaurantId, @RequestBody Restaurant restaurant){
-
 
         try {
             //jwt에서 idx 추출.
@@ -87,7 +121,6 @@ public class RestaurantController {
                     , restaurant.getIntroductionBoard(),restaurant.getTipDelivery(),restaurant.getTimeDelivery(),restaurant.getCompanyRegistrationNumber(),restaurant.getCategories()
                     , restaurant.getType(), restaurant.getRestaurantImage(),restaurant.getMinDeliveryPrice(),restaurant.getClosedDay(),restaurant.getPossibleDelivery(),restaurant.getStatus()
                     , restaurant.getFacilities(), restaurant.getFavoriteNum(),restaurant.getPaymentMethod());
-
 
             restaurantService.modifyRestaurant(patchRestaurantReq, restaurantId);
 
@@ -120,8 +153,6 @@ public class RestaurantController {
         try {
 
             GetRestaurantRes getRestaurantRes = getRestaurant(restaurantId);
-
-            System.out.println(getRestaurantRes.getRestaurantId());
 
             restaurantService.deleteRestaurant(getRestaurantRes);
 

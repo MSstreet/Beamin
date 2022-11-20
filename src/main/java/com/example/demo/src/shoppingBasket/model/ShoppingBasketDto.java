@@ -22,6 +22,10 @@ public class ShoppingBasketDto {
     // 메뉴 고유 번호
     private Integer menuId;
 
+//    private Integer menuOptionId;
+//
+//    private Integer menuOptionDetailId;
+
     //private Integer restaurantId;
 
     // 물품 수량
@@ -34,8 +38,8 @@ public class ShoppingBasketDto {
    private int totalPrice;
 
 
-   public void initSaleTotal(GetMenuRes getMenuRes){
-
-       this.totalPrice = getMenuRes.getPrice() * this.count;
-   }
+//   public void initSaleTotal(GetMenuRes getMenuRes){
+//
+//       this.totalPrice = getMenuRes.getPrice() * this.count;
+//   }
 }

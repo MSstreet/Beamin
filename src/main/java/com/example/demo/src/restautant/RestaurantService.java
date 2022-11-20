@@ -19,7 +19,6 @@ import static com.example.demo.config.BaseResponseStatus.DATABASE_ERROR;
 @Service
 public class RestaurantService {
 
-
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final RestaurantDao restaurantDao;

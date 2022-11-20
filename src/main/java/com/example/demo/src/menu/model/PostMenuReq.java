@@ -1,14 +1,15 @@
 package com.example.demo.src.menu.model;
 
-import com.example.demo.src.restautant.model.Restaurant;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class PostMenuReq {
 
 //    // 메뉴 고유 번호

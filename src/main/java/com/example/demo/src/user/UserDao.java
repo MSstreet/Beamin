@@ -155,4 +155,17 @@ public class UserDao {
 
         return this.jdbcTemplate.update(deleteUserQuery,userId);
     }
+
+    public UserInfo getUserInfo(int UserId){
+        String getUserInfoQuery = "select ID, nick_name,mobile_phone, email, address from user where Id = ?";
+
+        return this.jdbcTemplate.queryForObject(getUserInfoQuery,
+                (rs, rowNum) -> new UserInfo(
+                        rs.getInt("ID"),
+                        rs.getString("nick_name"),
+                        rs.getString("mobile_phone"),
+                        rs.getString("email"),
+                        rs.getString("address")),
+                UserId);
+    }
 }

@@ -21,6 +21,7 @@ public class ShoppingBasketDao {
     }
 
     public int createShoppingBasket(ShoppingBasketDto shoppingBasketDto){
+        System.out.println("ddddddddddddddddddddddddddddddddddddddddd");
 
         String createShoppingBasketQuery = "insert into shopping_basket (user_Id, menu_Id, count) VALUES(?,?,?)";
 
@@ -69,7 +70,7 @@ public class ShoppingBasketDao {
 
     public int modifyShoppingBasket1(ShoppingBasketDto shoppingBasketDto){
 
-        String modifyShoppingBasketQuery = "update shopping_basket set coutn = ? where shopping_basket_id = ?";
+        String modifyShoppingBasketQuery = "update shopping_basket set count = ? where shopping_basket_id = ?";
 
         Object[] modifyShoppingBasketParams = new Object[]{shoppingBasketDto.getCount(),shoppingBasketDto.getShoppingBasketId()};
 

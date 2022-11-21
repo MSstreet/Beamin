@@ -100,8 +100,8 @@ public class ShoppingBasketController {
     }
 
     @ResponseBody
-    @PutMapping("/{userId}/{shoppingBasketId}")
-    public BaseResponse<String> modifyShoppingBasket(@PathVariable("userId") int userId, @PathVariable("shoppingBasketId") int shoppingBasketId, @RequestBody ShoppingBasketDto shoppingBasketDto){
+    @PutMapping("/{userId}")
+    public BaseResponse<String> modifyShoppingBasket(@PathVariable("userId") int userId, @RequestBody ShoppingBasketDto shoppingBasketDto){
 
         try {
             int userIdxByJwt = jwtService.getUserIdx();
@@ -112,7 +112,7 @@ public class ShoppingBasketController {
 
             shoppingBasketService.modifyShoppingBasket(shoppingBasketDto);
 
-            String result = "요청하신 메뉴를 삭제하였습니다.";
+            String result = "";
 
             return new BaseResponse<>(result);
 

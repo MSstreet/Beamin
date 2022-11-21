@@ -133,4 +133,8 @@ public class UserService {
 
     }
 
+    public UserInfo getUserInfo(int memberId){
+        return userDao.getUserInfo(memberId);
+    }
+
 }

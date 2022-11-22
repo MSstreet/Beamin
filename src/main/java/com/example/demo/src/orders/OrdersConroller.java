@@ -4,14 +4,12 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 
 import com.example.demo.src.orders.model.OrderInfo;
-import com.example.demo.src.orders.model.OrderPageDTO;
-import com.example.demo.src.orders.model.OrderPageItemDTO;
+
 import com.example.demo.src.orders.model.Orders;
 import com.example.demo.src.restautant.RestaurantProvider;
-import com.example.demo.src.restautant.RestaurantService;
-import com.example.demo.src.restautant.model.GetRestaurantRes;
+
 import com.example.demo.src.user.UserService;
-import com.example.demo.src.user.model.UserInfo;
+
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +38,7 @@ public class OrdersConroller {
 
     @Autowired
     private final OrdersProvider ordersProvider;
+
     @Autowired
     private final JwtService jwtService;
 

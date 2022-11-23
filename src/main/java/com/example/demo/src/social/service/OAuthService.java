@@ -69,7 +69,7 @@ public class OAuthService {
         return access_Token;
     }
 
-    public void createKakaoUser(String token) throws BaseException {
+    public HashMap<String, Object> createKakaoUser(String token) throws BaseException {
 
         HashMap<String, Object> userInfo = new HashMap<String, Object>();
         String reqURL = "https://kapi.kakao.com/v2/user/me";
@@ -104,7 +104,7 @@ public class OAuthService {
             int id = element.getAsJsonObject().get("id").getAsInt();
 
             boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
-
+            String nickname = element.getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString();
 
             String email = "";
             if(hasEmail){
@@ -113,11 +113,19 @@ public class OAuthService {
 
             System.out.println("id : " + id);
             System.out.println("email : " + email);
+            System.out.println("nickname : " + nickname);
+
+            userInfo.put("email",email);
+            userInfo.put("nickname",nickname);
+
+
 
             br.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return userInfo;
     }
 }

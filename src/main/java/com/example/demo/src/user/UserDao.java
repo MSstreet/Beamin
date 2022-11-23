@@ -60,6 +60,27 @@ public class UserDao {
     }
 
 
+    public int createUser1(PostSocialUserReq postSocialUserReq){
+
+        String createUserQuery = "insert into user1 (email,nick_name) VALUES (?,?)";
+
+        System.out.println("===================== :"+ postSocialUserReq.getEmail());
+
+        Object[] createUserParams = new Object[]{postSocialUserReq.getEmail(), postSocialUserReq.getNickname()};
+
+        for(int i = 0; i < createUserParams.length; i++){
+            System.out.println(createUserParams[i]);
+        }
+
+        this.jdbcTemplate.update(createUserQuery, createUserParams);
+
+       String lastInsertIdQuery = "select last_insert_id()";
+
+//        System.out.println(lastInsertIdQuery);
+
+        return this.jdbcTemplate.queryForObject(lastInsertIdQuery,int.class);
+    }
+
     public int createUser(PostUserReq postUserReq){
 
         String createUserQuery = "insert into user (login_id,password,nick_name,mobile_phone,address,email,grade,mail_status,sms_status, profile_image) VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -69,7 +90,7 @@ public class UserDao {
 
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
-       String lastInsertIdQuery = "select last_insert_id()";
+        String lastInsertIdQuery = "select last_insert_id()";
 
 //        System.out.println(lastInsertIdQuery);
 

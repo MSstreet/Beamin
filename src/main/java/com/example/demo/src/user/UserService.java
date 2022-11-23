@@ -72,6 +72,23 @@ public class UserService {
         }
     }
 
+    public PostUserRes createUser1(PostSocialUserReq postSocialUserReq) throws BaseException {
+
+
+        try{
+            int userIdx = userDao.createUser1(postSocialUserReq);
+
+            //jwt 발급.
+            //String jwt = jwtService.createJwt(userIdx);
+            System.out.println("createUser1 :" + userIdx);
+            return new PostUserRes(userIdx);
+
+
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
     public void modifyUserName(PutUserReq putUserReq) throws BaseException {
 
 //        if(userProvider.checkMobilePhone(putUserReq.getMobilePhone()) ==1){
